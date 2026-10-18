@@ -1,0 +1,30 @@
+\begin{tikzpicture}[scale=0.8]
+  \coordinate (A) at (0, {2*sqrt(3)});
+  \coordinate (B) at (-2, 0);
+  \coordinate (C) at (2, 0);
+  \coordinate (D) at (-3, 0);
+  \coordinate (D') at (-3.3, 0);
+  %\coordinate (E) at (1, {sqrt(3)});
+  \coordinate (E') at (-0.5,{(2+0.5)*sqrt(3)});
+  \coordinate (F) at (0.6, {(2+0.6)*sqrt(3)});
+  \coordinate (F') at (0.8, {(2+0.8)*sqrt(3)});
+  \draw[very thick]
+      (A) node[anchor=west]{$A = [\vc{a}]$}
+      -- (B) node[anchor=north, xshift=12]{$B = [\vc{b}]$}
+      -- (C) node[anchor=north]{$C = [\vc{c}]$} 
+      -- cycle;
+  \filldraw[black] (A) circle (1.5pt)
+    (B) circle (1.5pt) 
+    (C) circle (1.5pt)
+    (D) circle (1.5pt);
+  
+  \draw[thin, name path=F'A] (F') -- (A);
+  \draw[thin] (D') -- (B);
+  \draw[thin, name path=E'A] (E') -- (A);
+  \draw[thick, name path=DF, blue]
+       (F) -- (D) node[anchor=north, xshift=-3, black]{$D = [\vc{d}]$};
+  \filldraw[black, name intersections={of=E'A and DF}]
+    (intersection-1) circle (1.5pt) node[anchor=east]{$E$};
+  \filldraw[black, name intersections={of=F'A and DF}] 
+    (intersection-1) circle (1.5pt) node[anchor=west]{$F = [\vc{f}]$};
+\end{tikzpicture}

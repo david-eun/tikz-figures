@@ -1,0 +1,31 @@
+\begin{tikzpicture}[scale=0.8]
+  \coordinate (A) at (0, {2*sqrt(3)});
+  \coordinate (B) at (-2, 0);
+  \coordinate (C) at (2, 0);
+  \coordinate (D) at (3, 0);
+  \coordinate (D') at (3.5, 0);
+  \coordinate (E) at (1, {sqrt(3)});
+  \coordinate (F) at (-0.5, {1.5*sqrt(3)});
+
+  \draw[very thick]
+         (A) node[anchor=south]{$A = [\vc{a}]$}
+      -- (B) node[anchor=north]{$B = [\vc{b}]$}
+      -- (C);
+  \draw[thin] (C) -- (D);
+
+  \draw[very thick, name path=AC]
+       (C) node[anchor=north]{$C = [\vc{c}]$}
+    -- (A) node[anchor=south]{$A = [\vc{a}]$};
+  \draw[thick, blue, name path=DF]
+       (F) node[anchor=south east, black]{$F = [\vc{f}]$}
+    -- (D) node[anchor=north, black, xshift=12]{$D = [\vc{d}]$};
+  \draw[thin] (D) -- (D');
+  \filldraw[black, name intersections={of=AC and DF}]
+    (intersection-1) circle (1.5pt) node[anchor=west, yshift=4]{$E$};
+
+  \filldraw[black] (A) circle (1.5pt)
+    (B) circle (1.5pt) 
+    (C) circle (1.5pt)
+    (D) circle (1.5pt)
+    (F) circle (1.5pt);
+\end{tikzpicture}

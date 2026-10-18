@@ -1,0 +1,34 @@
+\begin{tikzpicture}[scale=1.2]
+  \def \r {2} % radius
+
+  \coordinate (u1) at (\r, 0);
+  \coordinate (u2) at (-\r, 0);
+  \coordinate (v1) at ({\r * cos(45)}, {\r * sin(45)});
+  \coordinate (v2) at ({\r * cos(135)}, {\r * sin(135)});
+  \coordinate (w) at (0, \r);
+
+  \draw[vechead, thick] (-3.2, 0) -- (3.2, 0);
+  \draw[vechead, thick] (0, -2.5) -- (0, 2.7);
+  \draw[thick] circle (\r);
+
+  \filldraw[black] (u1) circle (1pt)
+    node[anchor=north west] {$\vc{u_1}$};
+  \filldraw[black] (u2) circle (1pt)
+    node[anchor=north east] {$\vc{u_2}$};
+  \filldraw[black] (v1) circle (1pt)
+    node[anchor=south west] {$\vc{v_1}$};
+  \filldraw[black] (v2) circle (1pt)
+    node[anchor=south east] {$\vc{v_2}$};
+  \filldraw[black] (w) circle (1pt)
+    node[anchor=south west] {$\vc{w}$};
+
+  \draw[thick] (0, 0) -- (v1);
+  \draw[thick] (0, 0) -- (v2);
+
+  \draw (0.5, 0) arc (0:45:0.5) node[midway, anchor=west, yshift=2] {$\frac{d}{2}$};
+  \draw ({0.55 * cos(45)}, {0.55 * sin(45)}) arc (45:90:0.55) node[midway, anchor=south, xshift=5, yshift=2.5] 
+      {\tiny{$\frac{\pi}{2} - \frac{d}{2}$}};
+  \draw (0, 0.5) arc (90:135:0.5) node[midway, anchor=south, xshift=-6, yshift=4]
+      {\tiny{$\frac{\pi}{2} - \frac{d}{2}$}};
+  \draw (-0.55, 0) arc (180:135:0.55) node[midway, anchor=east, yshift=1.5] {$\frac{d}{2}$};
+\end{tikzpicture}

@@ -1,0 +1,71 @@
+\tdplotsetmaincoords{65}{40}
+  \begin{tikzpicture}[scale=1.5, tdplot_main_coords]
+    \def \a {3}
+    \def \b {(\a/2 + \a/sqrt(2))}
+    \def \h {\a}
+
+    \coordinate (A) at (0, 0, 0);
+    \coordinate (B) at ({\b}, {\a/2}, 0);
+    \coordinate (C) at ({\b}, 0, 0);
+    \coordinate (O) at (0, 0, {\h});
+
+    \coordinate (A') at (0, 0, {\h/2});
+    \coordinate (B') at ({\b/2}, {\a/4}, {\h/2});
+    \coordinate (C') at ({\b/2}, 0, {\h/2});
+
+    % dots and signs
+    % right angle signs have a width and height of w
+    \def \w {0.2}
+    
+    % Exception: right angle signs of OCB and OC'B' 
+    % have a height of wh
+    \def \wh {(0.2 * sin(atan(\a/\b)) - 0.03)}
+
+    \draw (O) to [bend right=40] node[midway, fill=white] {$t$} (A');
+    \draw (O) to [bend right=40] node[midway, fill=white] {$h$} (A);
+
+    \filldraw[blue] (A) circle (1.2pt);
+
+    % BCA, B'C'A'
+    \draw[blue] ({\b - \w}, 0) -- ({\b - \w}, \w) -- ({\b}, \w);
+    \draw[blue] ({\b/2 - \w}, 0, {\h/2}) 
+     -- ({\b/2 - \w}, \w, {\h/2}) 
+     -- ({\b/2}, \w, {\h/2});
+
+    % OCB, OC'B'
+    \draw[blue] ({\b}, \w) 
+      -- ({\b - \wh}, \w, {\h/\b * \wh})
+      -- ({\b - \wh}, 0, {\h/\b * \wh});
+    \draw[blue] ({\b/2}, \w, {\h/2}) 
+      -- ({\b/2 - \wh}, \w, {\h/2 + \h/\b * \wh})
+      -- ({\b/2 - \wh}, 0, {\h/2 + \h/\b * \wh});
+
+    % OAC, OA'C'
+    \draw[blue] (\w, 0, 0) -- (\w, 0, \w) -- (0, 0, \w);
+    \draw[blue] (\w, 0, {\h/2}) -- (\w, 0, {\h/2 + \w}) -- (0, 0, {\h/2 + \w});
+ 
+    % pyramid
+    \draw[blue, thick, dashed] (A) node[black, anchor=east, xshift=-2] {$A$}
+      -- (B) node[black, anchor=west] {$B$};
+    \draw[blue, thick] (B) -- (C) node[black, midway, anchor=west, yshift=-5] {$\frac{a}{2}$}
+                                  node[black, anchor=west, yshift=-4] {$C$};
+    \draw[blue, thick] (C) -- (A) node[black, midway, anchor=north] {$b$};
+
+    \draw[blue, thick] (A) -- (O) node[black,, anchor=south] {$O$};
+    \draw[blue, thick] (B) -- (O);
+    \draw[blue, thick] (C) -- (O);
+
+    % using cycle makes the points of the triangle stick out of the pyramid.
+    \draw[blue, thick, dashed] (A') -- (B') node[black, anchor=south, xshift=6, yshift=-2] {$B'$};
+    \draw[blue, thick] (B') -- (C') node[black, midway, anchor=west, xshift=-2, yshift=-6] 
+                                      {$\frac{\gamma}{2}$} 
+                                    node[black, anchor=north, xshift=-5, yshift=2] {$C'$};
+    \draw[blue, thick] (C') -- (A') node[black, midway, anchor=north] {$\alpha$}
+                                    node[black, anchor=east] {$A'$}; 
+
+    % polygon
+    \draw[thick] ({\b - \a * cos(45)}, {\a/2 + \a * sin(45)})
+    -- (B)
+    -- ({\b}, -{\a/2})
+    -- ({\b - \a * cos(45)}, {-\a/2 - \a * sin(45)});
+  \end{tikzpicture}

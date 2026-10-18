@@ -1,0 +1,74 @@
+\begin{tikzpicture}[scale=3]
+  \def \rightanglesymsize {0.1} % right-angle symbol
+
+  \def \gm {0.5} % gravatity coefficeient
+  \def \e {0.75}  % eccentricity
+  \def \rz {1}   % distance at periapsis
+  % \def \vz {1}   % speed at periapsis
+  
+  \def \vz {sqrt((1 + \e) * \gm / \rz)} % speed at periapsis
+  \def \l {(1 + \e) * \rz} % Semi latus rectum
+
+  % Origin 
+  \coordinate (O) at (0, 0);
+  \filldraw[black] (O) circle (0.5pt) node[anchor=north] {$\vcz$};
+
+  % Periapsis line
+  \draw[very thin,vechead] (-0.5, 0) -- ({1.2 * (1 + 1/\e) * \rz}, 0) coordinate (G);
+
+  % Periapsis
+  \filldraw[black] (\rz, 0) circle (0.5pt) node[anchor=south west] {periapsis};
+  \draw[thin] (0, 0) to [out=335,in=205,distance=0.3cm] 
+    node[anchor=midway,below] {$r_0$} (\rz, 0);
+
+  % Velocity at periapsis
+    %\draw[vechead] (\rz, 0) -- (\rz, \vz) node[midway,anchor=west] {$\vc{v}(0)$};
+
+  % Orbit
+  \draw[thick,->] plot [variable=\t,domain=-20:80,smooth,samples=20] 
+    ({\l / (1 + \e * cos(\t)) * cos(\t)}, {\l / (1 + \e * cos(\t)) * sin(\t)}) node[anchor=east] {orbit};
+
+  \foreach \phi in {pi/5} {
+      % Planet position
+      \coordinate (p) at ({\l / (1 + \e * cos(\phi r)) * cos(\phi r)}, {\l / (1 + \e * cos(\phi r)) * sin(\phi r)});
+
+      % Directrix line
+      \draw[thick] ({(1 + 1/\e) * \rz}, -0.3) -- ({(1 + 1/\e) * \rz}, 0) coordinate (I) -- ({(1 + 1/\e) * \rz}, 1.365) coordinate (H) node[anchor=south] {directrix};
+      \draw[thin] (\rz, 0) .. controls +(335:0.3) and +(205:0.3) ..
+        node[anchor=midway,below] {$\displaystyle\frac{r_0}{\epsilon}$} ({(1 + 1 / \e) * \rz}, 0);
+    
+      % Radial line
+      \draw[very thin] (0, 0) -- ($1.7*(p)$) coordinate (C);
+
+      % Horizontal line through planet
+      \draw[very thin] ($(p)+(-1.2,0)$) coordinate (F) -- ({(1 + 1/\e) * \rz}, {\l / (1 + \e * cos(\phi r)) * sin(\phi r)}) coordinate (J);
+      
+      % Velocity vector
+      \coordinate (v) at ({(\gm / (\rz * \vz) * (-sin(\phi r))) }, {(\gm / (\rz * \vz) * (\e + cos(\phi r))) });
+      \draw[red,thick,vechead] (p) -- ++(v) node[anchor=south east,xshift=8,yshift=-2] {$\vc{v}(\theta)$};
+    
+      % Radial component
+      \def \radialcomponent {((\gm / (\rz * \vz) * (-sin(\phi r))) * cos(\phi r) + (\gm / (\rz * \vz) * (\e + cos(\phi r))) * sin(\phi r))}
+      % \draw[thin] (p) to [out=335,in=245,distance=0.5mm] node[anchor=midway,right,xshift=-6,yshift=-6] {$(\epsilon)$} 
+        % ++({\radialcomponent * cos(\phi r)}, {\radialcomponent * sin(\phi r)});
+      \draw[blue,thick,vechead] (p) -- node[black,anchor=midway,right,xshift=-6,yshift=-8] {$(\epsilon)$} ++({\radialcomponent * cos(\phi r)}, {\radialcomponent * sin(\phi r)}) 
+        node[anchor=west,yshift=-3] {$\{\vc{v}(\theta) \cdot \hat{r}(\theta)\}\,\hat{r}(\theta)$};
+    
+      % Horizontal component
+      \def \horizontalcomponent {((\gm / (\rz * \vz) * (sin(\phi r)))}
+      % \draw[thin] (p) to [out=205,in=335,distance=0.1cm] node[anchor=midway,below,yshift=2] {$(1)$} ++({-\horizontalcomponent}, 0);
+      \draw[blue,thick,vechead] (p) -- node[black,anchor=midway,below,yshift=2] {$(1)$} ++({-\horizontalcomponent}, 0) node[anchor=north east] {$\{\vc{v}(\theta) \cdot \hat{r}(\pi)\}\,\hat{r}(\pi)$};
+    
+      % Two perpendicular dotted lines
+      \draw[thick,dotted] ($(p)+(v)$) coordinate (A) -- ($(p)+({\radialcomponent * cos(\phi r)}, {\radialcomponent * sin(\phi r) })$) coordinate (B);
+      \draw[thick,dotted] ($(p)+(v)$) coordinate (D) -- ($(p)+({-\horizontalcomponent}, 0)$) coordinate (E);
+      
+      \draw pic [draw,angle radius=2mm] {right angle = A--B--C};
+      \draw pic [draw,angle radius=2mm] {right angle = D--E--F};
+      \draw pic [draw, angle radius=2mm] {right angle = H--I--O};
+      \draw pic [draw, angle radius=2mm] {right angle = H--J--p};
+
+      \draw pic [draw,angle radius=4mm] {angle = G--O--C};
+      \draw (O) node[anchor=south west,xshift=10,yshift=-2] {$\theta$};
+  }
+\end{tikzpicture}

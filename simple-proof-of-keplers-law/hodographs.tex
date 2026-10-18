@@ -1,0 +1,46 @@
+\newcommand{\Hodograph}[2]{
+  \begin{tikzpicture}[scale=2.8]
+    \def \gm {0.5} % gravitational constant factor
+    \def \e {#1}   % eccentricity
+    \def \rz {1}   % distance at periapsis
+    
+    \def \vz {sqrt((1 + \e) * \gm / \rz)} % speed at periapsis
+    \def \tz {#2 * 0.2} % 표시 각도 스케일
+    
+    % 좌표축
+    \draw[vechead] (-0.7, 0) -- (0.7, 0);
+    \draw[vechead] (0, -0.2) node[anchor=north] {$(\epsilon=#1)$} -- (0, 1.2) coordinate (A);
+    
+    % Hodograph 곡선
+    \draw[blue,very thick] plot [variable=\t,domain=-#2:#2,smooth,samples=20] 
+    ({(\gm / (\rz * \vz) * (-sin(\t)))}, {(\gm / (\rz * \vz) * (\e + cos(\t)))});
+    
+    % 여러 속도 벡터
+    \foreach \i [evaluate=\i as \phi using #2*\i] in {-1,-0.8,...,1} {
+        \draw[thin,vechead] (0, 0) -- ({(\gm / (\rz * \vz) * (-sin(\phi)))}, {(\gm / (\rz * \vz) * (\e + cos(\phi)))});
+    }
+    
+    % 중심 점 표시
+    \filldraw[black] (0, {\gm / (\rz * \vz) * \e}) coordinate (C) circle (0.3pt) 
+        node[anchor=west] {$\frac{GM}{r_0 v_0}(0,\epsilon)$};
+    
+    % 각도 표시
+    \draw[blue] (0, {\gm / (\rz * \vz) * \e}) -- ++($1.2 * \gm / (\rz * \vz)*({-sin(\tz)}, {cos(\tz)})$) coordinate (B);
+    \draw[red,thick,vechead] (0, 0) -- ({(\gm / (\rz * \vz) * (-sin(\tz)))}, {(\gm / (\rz * \vz) * (\e + cos(\tz)))}) node[anchor=east] {$\vc{v}(\theta)$};
+    
+    \draw pic [red,draw,angle radius=3mm] {angle = A--C--B};
+    \draw (C) node[red,anchor=south east,xshift=2,yshift=6] {$\theta$};
+    
+    % 벡터 라벨
+    \draw[thick,blue] (0, {\gm / (\rz * \vz) * \e}) to [out=335,in=25,distance=0.5mm] node[anchor=midway,right] {$(\epsilon)$} (0, 0);
+    \draw[thick,blue] (0, {\gm / (\rz * \vz) * \e}) to [out=25,in=335,distance=0.7mm] node[anchor=midway,right] {$(1)$} (0, {\gm / (\rz * \vz) * (\e + 1)});
+  \end{tikzpicture}
+}
+
+\begin{figure}[h!]
+    \centering
+    \Hodograph{0.75}{180}
+    \Hodograph{1}{180}
+    \Hodograph{1.5}{180} % 초과값은 acos(-1/\e) 등으로 조정 가능
+    \caption{Hodographs for the cases $\epsilon=0.75$, $\epsilon=1$, and $\epsilon=1.5$.}
+\end{figure}

@@ -1,0 +1,44 @@
+\begin{tikzpicture}
+  \coordinate (A) at (0, 0);
+  \coordinate (B) at (10, 0);
+  \coordinate (C) at (4, 5);
+  \coordinate (D) at (3.4, 0);
+  \coordinate (E) at (2, {1.25*2});
+  \coordinate (G) at (7, 0);
+
+  \draw[thick] (A) node[anchor=north] {$A = [(p + 1) \vc{u}]$}
+    -- (B) node[anchor=north] {$B = [q \vc{v}]$}
+    -- (C) node[anchor=south] {$C = [\vc{w}]$} 
+    -- cycle;
+
+  \draw[thick, name path=C--D] (C) 
+    -- (D) node[anchor=north] {$D = [(p + 1) \vc{u} \oplus q \vc{v}]$};
+
+  \draw[thick, name path=E--G] (E) node[anchor=south east, yshift=-4] 
+    {$\begin{aligned}
+        E = [\vc {u} \oplus \vc {w}]\\ = [\vc {u} + \vc {w}]
+    \end{aligned}$}
+    -- (G) node[anchor=north] {$\begin{aligned}
+      G = [p \vc{u} \oplus q \vc{v}]\\ = [p \vc{u} + q \vc{v}]
+    \end{aligned}$};
+
+  \filldraw[black] (A) circle (1pt)
+    (B) circle (1pt)
+    (C) circle (1pt)
+    (D) circle (1pt)
+    (E) circle (1pt)
+    (G) circle (1pt);
+
+  \coordinate (P) at (intersection of C--D and E--G);
+  \filldraw[black] (P) circle (2pt)
+    node[anchor=west, xshift=8] {$P = [(p + 1) \vc{u} \oplus q \vc{v} \oplus \vc{w}]$};
+
+  \path[name path=A--P] (A) -- (P);
+  \path[name path=B--C] (B) -- (C);
+  \coordinate (F) at (intersection of A--P and B--C);
+
+  \filldraw[black] (F) circle (1pt) 
+    node[anchor=west, yshift=3] {$F = [q \vc{v} \oplus \vc{w}] 
+      = [q \vc{v} + \vc{w}]$};
+  \draw[thick] (A) -- (F);
+\end{tikzpicture}

@@ -1,0 +1,28 @@
+\begin{tikzpicture}[scale=0.8]
+  \coordinate (A) at (0, {2*sqrt(3)});
+  \coordinate (B) at (-2, 0);
+  \coordinate (C) at (2, 0);
+  \coordinate (D) at (0, 0);
+  \coordinate (E) at (1, {sqrt(3)});
+  \coordinate (F) at (-1, {sqrt(3)});
+  \coordinate (P) at (0, {2*sqrt(3)/3});
+  \draw[very thick]
+       (A) node[anchor=south]{$A = [\vc{a}]$}
+    -- (B) node[anchor=north]{$B = [\vc{b}]$}
+    -- (C) node[anchor=north]{$C = [\vc{c}]$}
+    -- cycle;
+  \draw[thick, blue]
+      (A) -- (D) node[anchor=north, black]{$D = [\vc{d}]$};
+  \draw[thick, dashed, blue]
+      (B) -- (E) node[anchor=west, black]{$E$};
+  \draw[thick, blue]
+      (C) -- (F) node[anchor=south east, black]{$F = [\vc{f}]$};
+  \filldraw[black] (P) circle (2pt);
+
+  \filldraw[black] (A) circle (1.5pt)
+    (B) circle (1.5pt) 
+    (C) circle (1.5pt)
+    (D) circle (1.5pt)
+    (E) circle (1.5pt)
+    (F) circle (1.5pt);
+\end{tikzpicture}
